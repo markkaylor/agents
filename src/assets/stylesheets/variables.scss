@@ -1,7 +1,40 @@
 // Colors
-
 $highlight-blue: #197ce0;
 $muted: #d6d6d6;
+$dark-muted: #c4c4c4;
+$light-muted: #f1f1f1;
 
 // Icon Sizes
 $icon-md: 1.25rem;
+
+.bold {
+  font-weight: bold;
+}
+
+.light-bold {
+  font-weight: 500;
+}
+
+.muted {
+  color: $muted;
+}
+
+.dark-muted {
+  color: $dark-muted
+}
+
+.highlight-blue {
+  color: $highlight-blue;
+}
+
+.icon {
+  padding: 0 0.5rem;
+  
+  i {
+    font-size: $icon-md
+  }
+}
+
+a {
+  cursor: pointer;
+}

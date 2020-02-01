@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container" 
+    class="list-container" 
     v-if="message.messages">
     <div
       v-for="message in sortedMessages"
@@ -18,18 +18,21 @@ import { mapState } from 'vuex'
 export default {
   created() {
     this.$store.dispatch('fetchMessages')
-    console.log(this.sortedMessages)
   },
   computed: {
     ...mapState(['message']),
+    /**
+     * TODO: Turn this into a getter
+     */
     sortedMessages() {
       const messages = this.message.messages
       return messages.sort((a,b) => b.read - a.read)
     }
   },
   components: {
-    MessageCard
+    MessageCard,
   }  
 }
 </script>
+
 
