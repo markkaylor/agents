@@ -3,7 +3,7 @@
     class="container" 
     v-if="message.messages">
     <div
-      v-for="message in message.messages"
+      v-for="message in sortedMessages"
       :key="message.id"
     >
       <message-card :message="message" />
@@ -18,9 +18,14 @@ import { mapState } from 'vuex'
 export default {
   created() {
     this.$store.dispatch('fetchMessages')
+    console.log(this.sortedMessages)
   },
   computed: {
-    ...mapState(['message'])
+    ...mapState(['message']),
+    sortedMessages() {
+      const messages = this.message.messages
+      return messages.sort((a,b) => b.read - a.read)
+    }
   },
   components: {
     MessageCard

@@ -1,20 +1,40 @@
 <template>
   <div class="message-card">
     <!-- Type Icon-->
-    <div class="message-icon">{{ message.type }}</div>
+    <div class="message-icon">
+      <i 
+        :class="[
+          'mypro-icon mypro-icon-'+iconType,
+          message.read ? 'highlight-blue' : 'muted'
+        ]" 
+      />
+    </div>
     <div class="message-container">
       <div class="message-header">
         <!-- Name -->
-        <h3 class="message-contact bold">{{ fullName }}</h3>
+        <div class="message-contact bold">
+          <h3>{{ fullName }} </h3>
+          <span 
+            v-if="isPhoneMessage"
+            class="message-phone"
+          >
+            ({{ message.contact.phone }})
+          </span>
+        </div>
         <!-- Time -->
-        <span class="message-time">Time</span>
+        <span class="message-time highlight-blue">
+          {{ formatDate }}
+        </span>
       </div>
       <div class="message-content">
         <!-- Type Description -->      
-        <div class="message-type light-bold">{{ message.type }}</div>
-
+        <div class="message-type light-bold">
+          {{ messageType }}
+        </div>
         <!-- Body -->
-        <div class="message-body">{{ message.body }}</div>
+        <div class="message-body">
+          {{ message.body }}
+        </div>
       </div>
     </div>
   </div>
@@ -25,20 +45,58 @@
     props: {
       message: {
         type: Object,
+        required: true,
       }
     },
     computed: {
       fullName() {
         return this.message.contact.firstname + ' ' + this.message.contact.lastname
+      },
+      isPhoneMessage() {
+        return this.message.type === 'phone' || this.message.type === 'sms'
+      },
+      formatDate() {
+        return this.$moment(this.message.date).format('hh:mm')
+      },
+      iconType() {
+        return this.message.type === 'email' ? 'mail' : this.message.type
+      },
+      messageType() {
+        let message
+        if (this.message.type === 'phone') {
+          message = 'Phone call from MeilleursAgents'
+        }
+
+        if (this.message.type === 'sms') {
+          message = 'Text Message in your MeilleursAgents inbox'
+        }
+
+        if (this.message.type === 'email') {
+          message = 'Email in your MeilleursAgents inbox'
+        }
+
+        return message
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/mypro-icon.css';
+@import '../../assets/stylesheets/variables.scss';
+
 .message-card {
   display: flex;
-  border-bottom: 1px solid grey;
+  border-bottom: 1.25px solid $muted;
+  padding: 1.25rem 0.5rem;
+}
+
+.message-icon {
+  padding: 0 0.5rem;
+  
+  i {
+    font-size: $icon-md
+  }
 }
 
 .message-container {
@@ -51,6 +109,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  .message-body {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 400px
+  }
 }
 
 .message-header {
@@ -59,6 +125,23 @@
 
   h3 {
     margin: 0;
+    display: inline;
   }
+
+  span {
+    font-size: 14px;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.muted {
+  color: $muted;
+}
+
+.highlight-blue {
+  color: $highlight-blue;
 }
 </style>
