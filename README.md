@@ -12,7 +12,7 @@ yarn serve
 
 ### Notes
 
-Le Compteur ne marche pas parfaitement. Il compte seulement les messages non lus dan le vitrine actuelle. Quand le autoscroll fait un appel au API il se met à jour. Mais vous pouvez cliquer sur un message pour marquer le message read = true et le compteur le prendra en compte.
+Le Compteur ne marche pas parfaitement. Il compte seulement les messages non lus dans la vitrine actuelle. Quand le autoscroll fait un appel au API il se met à jour. Mais vous pouvez cliquer sur un message pour marquer le message read = true et le compteur le prendra en compte.
 
 J'ai essayé de faire un PUT et update le message mais ça m'a donné un NOT ALLOWED. J'ai laissé le travail sur le branch update-message.
 
