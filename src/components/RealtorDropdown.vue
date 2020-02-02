@@ -31,6 +31,7 @@ export default {
     fetchMessages(realtorId) {
       this.$store.dispatch('fetchMessages', realtorId)
       this.$store.dispatch('fetchRealtor', realtorId)
+      this.$store.dispatch('toggleDropdown')
     }
   },
 }

@@ -74,7 +74,19 @@ export default {
       return this.message.type === 'phone' || this.message.type === 'sms'
     },
     formatDate() {
-      return this.$moment(this.message.date).format('hh:mm')
+      const today = this.$moment()
+      const yesterday = today.subtract(1, 'days')
+      
+      
+      if (this.message.date == today) {
+        return this.$moment(this.message.date).format('hh:mm')
+      }
+      
+      if (this.message.date == yesterday) {
+        return 'Yesterday'
+      }
+
+      return this.$moment(this.message.date).format('DD/MM/YYYY')
     },
     iconType() {
       return this.message.type === 'email' ? 'mail' : this.message.type

@@ -1,6 +1,7 @@
 import RealtorService from '@/services/RealtorService.js'
 
 export const state = {
+  showingDropdown: false,
   realtors: [],
   realtor: null,
 }
@@ -11,7 +12,10 @@ export const mutations = {
   },
   SET_REALTOR(state, realtor) {
     state.realtor = realtor
-  }
+  },
+  SET_SHOWING_DROPDOWN(state) {
+    state.showingDropdown = !state.showingDropdown
+  },
 }
 
 export const actions = {
@@ -29,6 +33,9 @@ export const actions = {
     if (realtor) {
       commit('SET_REALTOR', realtor)
     }
+  },
+  toggleDropdown({ commit }) {
+    commit('SET_SHOWING_DROPDOWN')
   }
 }
 

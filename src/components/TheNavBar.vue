@@ -12,7 +12,7 @@
           <div class="icon">
             <i class="mypro-icon mypro-icon-mail" />
           </div>
-            <div>{{ messageCount }}</div>
+            <div>{{ unreadMessageCount }}</div>
         </div>
       </div>
       <a 
@@ -27,9 +27,9 @@
         <i class="mypro-icon mypro-icon-arrow-down" />
       </a>
     </div>
-    <RealtorDropdown 
+    <RealtorDropdown
       :realtors="realtor.realtors"
-      :show="show" 
+      :show="showingDropdown" 
     />
   </div>
 </template>
@@ -39,33 +39,22 @@ import { mapState, mapGetters } from 'vuex'
 import RealtorDropdown from '@/components/RealtorDropdown.vue'
 
 export default {
-  data() {
-    return {
-      show: false,
-    }
-  },
   created() {
     this.$store.dispatch('fetchRealtors')
   },
   computed:{
-    ...mapState(['realtor']),
-    /**
-     * Counts the number of messages with the property read = true
-     */
-    ...mapGetters(['readMessageCount']),
-    /**
-     * These are the unread messages on the realtor endpoint
-     */
+    ...mapState({
+      realtor: state => state.realtor,
+      showingDropdown: state => state.realtor.showingDropdown 
+    }),
+    ...mapGetters(['unreadMessageCount']),
     unreadMessages() {
-      return this.realtor.realtor ? this.realtor.realtor.unread_messages : 0;
+      return this.unreadMessageCount !== 0
     },
-    messageCount() {
-      return this.unreadMessages - this.readMessageCount
-    }
   },
   methods: {
     toggleShow() {
-      this.show = !this.show
+      this.$store.dispatch('toggleDropdown')
     }
   },
   components: {

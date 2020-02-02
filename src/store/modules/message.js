@@ -63,7 +63,7 @@ export const getters = {
   sortedMessages: state => {
     return state.messages.sort((a,b) => a.read - b.read)
   },
-  readMessageCount: state => {
-    return state.messages.filter(message => message.read === true).length
+  unreadMessageCount: state => {
+    return state.messages.filter(message => message.read === false).length
   }
 }
