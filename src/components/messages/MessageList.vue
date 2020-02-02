@@ -1,12 +1,16 @@
 <template>
   <div
-    class="list-container" 
+    class="list-container"
+    :class="showingMessage ? 'hide-list' : 'show-list'" 
     v-if="message.messages">
     <div
       v-for="message in sortedMessages"
       :key="message.id"
     >
-      <message-card :message="message" />
+      <message-card 
+        :message="message" 
+        :showingMessage="showingMessage"
+      />
     </div>
   </div>
 </template>
@@ -27,12 +31,23 @@ export default {
     sortedMessages() {
       const messages = this.message.messages
       return messages.sort((a,b) => b.read - a.read)
+    },
+    showingMessage() {
+      return this.message.showingMessage
     }
   },
   components: {
-    MessageCard,
+    MessageCard
   }  
 }
 </script>
 
+<style lang="scss" scoped>
+.show-list {
+  display: block;
+}
 
+.hide-list {
+  display: none;
+}
+</style>

@@ -1,11 +1,20 @@
 // Colors
-$highlight-blue: #197ce0;
+$blue: #255289;
+$dark-blue: #134080;
+$light-green: #7ED322;
+$light-blue: #0074E4;
 $muted: #d6d6d6;
 $dark-muted: #c4c4c4;
 $light-muted: #f1f1f1;
 
+// Sizes
+
+$nav-height: 70px;
+
 // Icon Sizes
 $icon-md: 1.25rem;
+
+
 
 .bold {
   font-weight: bold;
@@ -24,7 +33,7 @@ $icon-md: 1.25rem;
 }
 
 .highlight-blue {
-  color: $highlight-blue;
+  color: $light-blue;
 }
 
 .icon {
@@ -38,3 +47,5 @@ $icon-md: 1.25rem;
 a {
   cursor: pointer;
 }
+
+

@@ -1,9 +1,10 @@
 <template>
   <div
+    v-if="message"
     class="details-container"
-    :class="showing ? 'show-message' : 'hide-message'"
+    :class="showingMessage ? 'show-message' : 'hide-message'"
   >
-    <a @click="showing = !showing">Back To Messages</a>
+    <a @click="toggleShow">Back To Messages</a>
     <div class="header-card">
       <div class="icon">
         <i 
@@ -40,24 +41,26 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      message: {
-        type: Object,
-      },
-      showing: {
-        type: Boolean,
-      }
+import { mapState } from 'vuex' 
+export default {
+  computed: {
+    ...mapState({
+      message: state => state.message.message,
+      showingMessage: state => state.message.showingMessage
+    }),
+    fullName() {
+      return this.message.contact.firstname + ' ' + this.message.contact.lastname
     },
-    computed: {
-      fullName() {
-        return this.message.contact.firstname + ' ' + this.message.contact.lastname
-      },
-      iconType() {
-        return this.message.type === 'email' ? 'mail' : this.message.type
-      },
+    iconType() {
+      return this.message.type === 'email' ? 'mail' : this.message.type
+    },
+  },
+  methods: {
+    toggleShow() {
+      this.$store.dispatch('showingMessage')
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -66,9 +69,10 @@
 .details-container {
   padding-top: 1rem;
   width: 100%;
+  background-color: $light-muted;
 
   a {
-    color: $highlight-blue;
+    color: $light-blue;
     margin: 0 1rem;
   }
   
@@ -113,20 +117,11 @@
 
 .details-body {
   margin: 1rem;
-  text-align: left;
+  height: 400px;
 }
 
 .show-message {
-  position: fixed;
   display: block;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: $light-muted;
-  z-index: 2;
 }
 
 .hide-message {

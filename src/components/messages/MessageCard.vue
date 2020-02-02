@@ -50,26 +50,18 @@
         </div>
       </div>
     </a>
-    <message-details
-      v-if="showing" 
-      :showing="showing"
-      :message="message"
-    />
   </div>
 </template>
 
 <script>
-import MessageDetails from '@/components/MessageDetails.vue'
 export default {
   props: {
     message: {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {
-      showing: false,
+    showingMessage: {
+      type: Boolean
     }
   },
   computed: {
@@ -100,16 +92,14 @@ export default {
       }
 
       return message
-    }
+    },
   },
   methods: {
     toggleShow() {
-      this.showing = !this.showing
+      this.$store.dispatch('showingMessage')
+      this.$store.dispatch('fetchMessage', this.message.id)
     }
   },
-  components: {
-    MessageDetails
-  }
 }
 </script>
 
