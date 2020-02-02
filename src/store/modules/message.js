@@ -18,6 +18,11 @@ export const mutations = {
   },
   SET_MESSAGE_READ(state) {
     state.message.read = true
+  },
+  PUSH_MESSAGES_TO_LIST(state, newMessages) {
+    newMessages.forEach(message => {
+      state.messages.push(message)
+    })
   }
 }
 
@@ -42,6 +47,12 @@ export const actions = {
   },
   messageRead({ commit }) {
     commit('SET_MESSAGE_READ')
+  },
+  fetchNextPage({commit}, payload) {
+    MessageService.getNextPage(payload) 
+      .then(response => {
+        commit('PUSH_MESSAGES_TO_LIST', response.data)
+      })
   }
 }
 
@@ -52,7 +63,7 @@ export const getters = {
   sortedMessages: state => {
     return state.messages.sort((a,b) => a.read - b.read)
   },
-  unreadMessageCount: state => {
-    return state.messages.filter(message => message.read === false).length
+  readMessageCount: state => {
+    return state.messages.filter(message => message.read === true).length
   }
 }

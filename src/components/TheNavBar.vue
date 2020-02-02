@@ -7,12 +7,12 @@
         </div>
         <div 
           class="message-counter"
-          :class="unreadMessageCount === 0 ? 'bg-muted' : 'bg-green'"
+          :class="unreadMessages ? 'bg-green' : 'bg-muted'"
         >
           <div class="icon">
             <i class="mypro-icon mypro-icon-mail" />
           </div>
-            <div>{{ unreadMessageCount }}</div>
+            <div>{{ messageCount }}</div>
         </div>
       </div>
       <a 
@@ -52,12 +52,15 @@ export default {
     /**
      * Counts the number of messages with the property read = true
      */
-    ...mapGetters(['unreadMessageCount']),
+    ...mapGetters(['readMessageCount']),
     /**
-     * These are the unread messages on the realtor endpoint, but the number doesn't make sense to me
+     * These are the unread messages on the realtor endpoint
      */
     unreadMessages() {
       return this.realtor.realtor ? this.realtor.realtor.unread_messages : 0;
+    },
+    messageCount() {
+      return this.unreadMessages - this.readMessageCount
     }
   },
   methods: {

@@ -4,7 +4,7 @@ export default {
   getMessages(realtorId) {
     return ApiClient.get('/realtors/'+realtorId+'/messages')
   },
-  getMessage(messageId) {
-    return ApiClient.get('/realtors/101/messages'+messageId)
+  getNextPage(payload) {
+    return ApiClient.get('/realtors/'+payload.realtorId+'/messages?page='+payload.page)
   }
 }

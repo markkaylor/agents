@@ -101,7 +101,7 @@ export default {
     toggleShow() {
       this.toggleMessageShow()
       this.fetchMessage(this.message.id)
-      this.messageRead()
+      this.messageRead() 
     }
   },
 }
