@@ -13,18 +13,19 @@ export const mutations = {
   SET_MESSAGE(state, message) {
     state.message = message
   },
-  SET_SHOWING_MESSAGES(state) {
+  SET_SHOWING_MESSAGE(state) {
     state.showingMessage = !state.showingMessage
+  },
+  TOGGLE_MESSAGE_READ(state) {
+    state.message.read = !state.message.read
   }
 }
 
 export const actions = {
-  fetchMessages({ commit, getters }) {
-    MessageService.getMessages()
+  fetchMessages({ commit }, realtorId) {
+    MessageService.getMessages(realtorId)
     .then(response => {
-      console.log(response.data)
       commit('SET_MESSAGES', response.data)
-      console.log(getters.getUnreadMessageCount)
     })
     .catch(error => {
       console.log('There was an error fetching the messages' + error)
@@ -33,20 +34,25 @@ export const actions = {
   fetchMessage({ commit, getters }, id) {
     const message = getters.getMessageById(id)
     if (message) {
-      console.log('no need for api')
       commit('SET_MESSAGE', message)
     } 
   },
   showingMessage({ commit }) {
-    commit('SET_SHOWING_MESSAGES')
+    commit('SET_SHOWING_MESSAGE')
   },
+  toggleMessageRead({ commit }) {
+    commit('TOGGLE_MESSAGE_READ')
+  }
 }
 
 export const getters = {
   getMessageById: state => id => {
     return state.messages.find(message => message.id === id)
   },
-  getUnreadMessageCount: state => {
-    return state.messages.filter(message => message.read === true).length
+  sortedMessages: state => {
+    return state.messages.sort((a,b) => b.read - a.read)
   },
+  unreadMessageCount: state => {
+    return state.messages.filter(message => message.read === true).length
+  }
 }

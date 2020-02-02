@@ -4,9 +4,13 @@
     :class="show ? 'show-dropdown' : 'hide-dropdown'"
   >
     <div class="dropdown-content">
-      <div v-for="realtor in realtors" :key="realtor.id">
+      <a 
+        v-for="realtor in realtors" 
+        :key="realtor.id"
+        @click="fetchMessages(realtor.id)"
+      >
           {{ realtor.name }}
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -21,6 +25,12 @@ export default {
     realtors: {
       type: Array,
       required: true,
+    }
+  },
+  methods: {
+    fetchMessages(realtorId) {
+      this.$store.dispatch('fetchMessages', realtorId)
+      this.$store.dispatch('fetchRealtor', realtorId)
     }
   },
 }
@@ -42,6 +52,8 @@ export default {
 .dropdown-content {
   color: black;
   position: absolute;
+  display: flex;
+  flex-direction: column;
 }
 
 .show-dropdown {

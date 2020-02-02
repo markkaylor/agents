@@ -5,18 +5,25 @@
         <div class="brand-logo">
           MeilleursAgents
         </div>
-        <div class="message-counter">
+        <div 
+          class="message-counter"
+          :class="unreadMessageCount === 0 ? 'bg-muted' : 'bg-green'"
+        >
           <div class="icon">
             <i class="mypro-icon mypro-icon-mail" />
           </div>
-          {{ getUnreadMessageCount }}
+            <div>{{ unreadMessageCount }}</div>
         </div>
       </div>
       <a 
         class="realtor-dropdown"
         @click="toggleShow"
       >
-        avatar
+        <img 
+          v-if="realtor.realtor"
+          :src="realtor.realtor.logo" 
+        />
+        <div v-else>Realtors</div>
         <i class="mypro-icon mypro-icon-arrow-down" />
       </a>
     </div>
@@ -28,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import RealtorDropdown from '@/components/RealtorDropdown.vue'
 
 export default {
@@ -40,12 +47,18 @@ export default {
   created() {
     this.$store.dispatch('fetchRealtors')
   },
-  mounted() {
-    console.log(this.realtor)
-  },
   computed:{
     ...mapState(['realtor']),
-    ...mapGetters(['getUnreadMessageCount'])
+    /**
+     * Counts the number of messages with the property read = true
+     */
+    ...mapGetters(['unreadMessageCount']),
+    /**
+     * These are the unread messages on the realtor endpoint, but the number doesn't make sense to me
+     */
+    unreadMessages() {
+      return this.realtor.realtor ? this.realtor.realtor.unread_messages : 0;
+    }
   },
   methods: {
     toggleShow() {
@@ -87,7 +100,6 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: $light-green;
   border-radius: 6px;
   font-weight: bold;
   width: 80px;
@@ -102,5 +114,15 @@ export default {
   align-items: center;
   padding: 0 1rem;
   background-color: $dark-blue;
+
+  img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  i {
+    padding-left: 10px;
+  }
 }
 </style>

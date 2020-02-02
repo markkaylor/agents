@@ -98,6 +98,7 @@ export default {
     toggleShow() {
       this.$store.dispatch('showingMessage')
       this.$store.dispatch('fetchMessage', this.message.id)
+      this.$store.dispatch('toggleMessageRead')
     }
   },
 }

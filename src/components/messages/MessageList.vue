@@ -17,21 +17,12 @@
 
 <script>
 import MessageCard from '@/components/messages/MessageCard.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  created() {
-    this.$store.dispatch('fetchMessages')
-  },
   computed: {
     ...mapState(['message']),
-    /**
-     * TODO: Turn this into a getter
-     */
-    sortedMessages() {
-      const messages = this.message.messages
-      return messages.sort((a,b) => b.read - a.read)
-    },
+    ...mapGetters(['sortedMessages']),
     showingMessage() {
       return this.message.showingMessage
     }
