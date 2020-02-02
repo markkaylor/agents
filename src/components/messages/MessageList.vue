@@ -40,9 +40,10 @@ export default {
       window.onscroll = () => {
         let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
         if (bottomOfWindow) {
+          this.count++
           let payload = {
             realtorId: this.realtor.realtor.id,
-            page: this.count++
+            page: this.count
           }
           this.$store.dispatch('fetchNextPage', payload)
         }
