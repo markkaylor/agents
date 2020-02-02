@@ -16,8 +16,12 @@ export const mutations = {
   SET_SHOWING_MESSAGE(state) {
     state.showingMessage = !state.showingMessage
   },
-  SET_MESSAGE_READ(state) {
-    state.message.read = true
+  SET_MESSAGE_READ(state, updMessage) {
+    //state.message.read = true
+    const index = state.messages.findIndex(message => message.id === updMessage.id)
+    if (index !== -1) {
+      state.messages.splice(index, 1, updMessage)
+    }
   },
   PUSH_MESSAGES_TO_LIST(state, newMessages) {
     newMessages.forEach(message => {
@@ -45,8 +49,15 @@ export const actions = {
   toggleMessageShow({ commit }) {
     commit('SET_SHOWING_MESSAGE')
   },
-  messageRead({ commit }) {
-    commit('SET_MESSAGE_READ')
+  messageRead({ commit }, payload) {
+    //commit('SET_MESSAGE_READ')
+    MessageService.updateMessage(payload)
+      .then(() => {
+        commit('SET_MESSAGE_READ', payload.updMessage)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   fetchNextPage({commit}, payload) {
     MessageService.getNextPage(payload) 

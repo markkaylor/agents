@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   props: {
@@ -66,7 +66,8 @@ export default {
       type: Boolean
     }
   },
-  computed: {    
+  computed: {   
+    ...mapState(['realtor']), 
     fullName() {
       return this.message.contact.firstname + ' ' + this.message.contact.lastname
     },
@@ -101,7 +102,16 @@ export default {
     toggleShow() {
       this.toggleMessageShow()
       this.fetchMessage(this.message.id)
-      this.messageRead() 
+      const updMessage = {
+        ...this.message,
+        read: true
+      }
+      let payload = {
+        realtorId: this.realtor.realtor.id,
+        id: this.message.id,
+        updMessage: updMessage
+      }
+      this.messageRead(payload) 
     }
   },
 }

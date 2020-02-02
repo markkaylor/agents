@@ -6,5 +6,8 @@ export default {
   },
   getNextPage(payload) {
     return ApiClient.get('/realtors/'+payload.realtorId+'/messages?page='+payload.page)
+  },
+  updateMessage(payload) {
+    return ApiClient.put('/realtors/'+payload.realtorId+'/messages/'+payload.id)
   }
 }
