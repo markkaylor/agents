@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex' 
+import { mapState, mapActions } from 'vuex' 
 export default {
   computed: {
     ...mapState({
@@ -56,8 +56,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['toggleMessageShow']),
     toggleShow() {
-      this.$store.dispatch('showingMessage')
+      this.toggleMessageShow()
     }
   }
 }

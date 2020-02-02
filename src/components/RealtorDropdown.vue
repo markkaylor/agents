@@ -40,13 +40,10 @@ export default {
 @import '../assets/stylesheets/variables.scss';
 
 .dropdown {
-  height: 100px;
-  width: 200px;
   position: relative;
-  background-color: $light-muted;
+  width: 50%;
   float: right;
   margin: 0.5rem;
-  border-radius: 4px;
 }
 
 .dropdown-content {
@@ -54,6 +51,14 @@ export default {
   position: absolute;
   display: flex;
   flex-direction: column;
+  border-radius: 4px;
+  background-color: $light-muted;
+  width: 100%;
+
+  a {
+    border-bottom: 1px solid $muted;
+    padding: 1rem;
+  }
 }
 
 .show-dropdown {

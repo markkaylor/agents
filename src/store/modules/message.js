@@ -16,8 +16,8 @@ export const mutations = {
   SET_SHOWING_MESSAGE(state) {
     state.showingMessage = !state.showingMessage
   },
-  TOGGLE_MESSAGE_READ(state) {
-    state.message.read = !state.message.read
+  SET_MESSAGE_READ(state) {
+    state.message.read = true
   }
 }
 
@@ -37,11 +37,11 @@ export const actions = {
       commit('SET_MESSAGE', message)
     } 
   },
-  showingMessage({ commit }) {
+  toggleMessageShow({ commit }) {
     commit('SET_SHOWING_MESSAGE')
   },
-  toggleMessageRead({ commit }) {
-    commit('TOGGLE_MESSAGE_READ')
+  messageRead({ commit }) {
+    commit('SET_MESSAGE_READ')
   }
 }
 
@@ -50,9 +50,9 @@ export const getters = {
     return state.messages.find(message => message.id === id)
   },
   sortedMessages: state => {
-    return state.messages.sort((a,b) => b.read - a.read)
+    return state.messages.sort((a,b) => a.read - b.read)
   },
   unreadMessageCount: state => {
-    return state.messages.filter(message => message.read === true).length
+    return state.messages.filter(message => message.read === false).length
   }
 }

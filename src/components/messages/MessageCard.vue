@@ -12,12 +12,12 @@
           <i 
             :class="[
               'mypro-icon mypro-icon-'+iconType,
-              message.read ? 'highlight-blue' : 'dark-muted'
+              message.read ? 'dark-muted' : 'highlight-blue'
             ]" 
           />
         </div>
         <div class="message-container"
-          :class="message.read ? '' : 'muted'"
+          :class="message.read ? 'muted' : ''"
         >
           <div class="message-header">
             <!-- Name -->
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     message: {
@@ -64,7 +66,7 @@ export default {
       type: Boolean
     }
   },
-  computed: {
+  computed: {    
     fullName() {
       return this.message.contact.firstname + ' ' + this.message.contact.lastname
     },
@@ -95,10 +97,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['toggleMessageShow', 'fetchMessage', 'messageRead']),
     toggleShow() {
-      this.$store.dispatch('showingMessage')
-      this.$store.dispatch('fetchMessage', this.message.id)
-      this.$store.dispatch('toggleMessageRead')
+      this.toggleMessageShow()
+      this.fetchMessage(this.message.id)
+      this.messageRead()
     }
   },
 }
