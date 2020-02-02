@@ -4,7 +4,12 @@
     class="details-container"
     :class="showingMessage ? 'show-message' : 'hide-message'"
   >
-    <a @click="toggleShow">Back To Messages</a>
+    <a 
+      @click="toggleShow"
+      class="back-link"
+    >
+      Back To Messages
+    </a>
     <div class="header-card">
       <div class="icon">
         <i 
@@ -33,7 +38,7 @@
     <div class="details-body">
       <div class="title">
         <h3>{{ fullName }}</h3>
-        <div class="date">{{ message.date }}</div>
+        <div class="date">{{ formatDate }}</div>
       </div>
       {{ message.body }}
     </div>
@@ -54,6 +59,11 @@ export default {
     iconType() {
       return this.message.type === 'email' ? 'mail' : this.message.type
     },
+    formatDate() {
+      return this.$moment(this.message.date).format('d MMMM YYYY') + 
+      ' at ' + 
+      this.$moment(this.message.date).format('hh:mm')
+    }
   },
   methods: {
     ...mapActions(['toggleMessageShow']),
@@ -70,6 +80,7 @@ export default {
 .details-container {
   padding-top: 1rem;
   width: 100%;
+  height: 100vh;
   background-color: $light-muted;
 
   a {
@@ -125,7 +136,18 @@ export default {
   display: block;
 }
 
-.hide-message {
+.back-link {
   display: none;
 }
+
+@media screen and (max-width: 1100px) {
+  .hide-message {
+    display: none;
+  }
+
+  .back-link {
+    display: block;
+  }
+}
+
 </style>

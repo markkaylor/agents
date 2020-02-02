@@ -60,8 +60,9 @@ export default {
 .show-list {
   display: block;
 }
-
-.hide-list {
-  display: none;
+@media screen and (max-width: 1100px) {
+  .hide-list {
+    display: none;
+  }
 }
 </style>

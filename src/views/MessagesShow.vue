@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1 v-if="!realtor.realtor">Please Select A Realtor</h1>
-    <message-list />
-    <message-details />
+    <div class="show-container">
+      <message-list class="message-list" />
+      <message-details class="message-details" />
+    </div>
   </div>
 </template>
 
@@ -23,6 +25,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width: 1100px) {
+  .show-container {
+    display: grid;
+    grid-template-columns: 40% 60%
+  }
+}
+
 h1 {
   text-align: center;
 }
