@@ -77,7 +77,6 @@ export default {
       const today = this.$moment()
       const yesterday = today.subtract(1, 'days')
       
-      
       if (this.message.date == today) {
         return this.$moment(this.message.date).format('hh:mm')
       }
@@ -120,8 +119,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/mypro-icon.css';
-@import '../../assets/stylesheets/variables.scss';
+@import '../assets/mypro-icon.css';
+@import '../assets/stylesheets/variables.scss';
 
 .message-card {
   display: flex;

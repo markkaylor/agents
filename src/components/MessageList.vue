@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import MessageCard from '@/components/messages/MessageCard.vue'
+import MessageCard from '@/components/MessageCard.vue'
 import { mapState, mapGetters } from 'vuex'
 
 export default {

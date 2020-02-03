@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import MessageList from '@/components/messages/MessageList.vue'
+import MessageList from '@/components/MessageList.vue'
 import MessageDetails from '@/components/MessageDetails.vue'
 import { mapState } from 'vuex' 
 
